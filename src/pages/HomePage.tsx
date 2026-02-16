@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Card,
   CardAction,
   CardContent,
   CardDescription,
@@ -10,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DynamicShadowCard } from "@/components/DynamicShadowCard";
 
 type SubscriptionState = "unset" | "subscribed" | "unsubscribed" | "denied";
 
@@ -64,9 +64,17 @@ export function HomePage() {
   const { variant, label } = badgeConfig[state];
 
   return (
-    <div className="flex min-h-svh items-center justify-center p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader>
+    <div className="h-svh flex items-stretch justify-center overflow-hidden bg-[radial-gradient(circle,_oklch(0.88_0_0)_1px,_transparent_1px)] bg-[length:16px_16px]">
+      <div className="w-full max-w-[512px] bg-[oklch(0.985_0_0)] border-x border-[oklch(0.92_0_0)] relative">
+        <div className="absolute top-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_bottom,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_bottom,_black_0%,_transparent_100%)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_top,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_top,_black_0%,_transparent_100%)]" />
+        <div className="overflow-y-auto no-scrollbar h-full px-16 py-[200px] flex flex-col gap-16">
+        <div className="w-full flex flex-col gap-3">
+          <div className="p-4">
+            <h1 className="text-[48px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)]" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h1>
+          </div>
+        <DynamicShadowCard className="w-full">
+          <CardHeader>
           <CardTitle>Notification Permissions</CardTitle>
           <CardDescription>
             Manage browser notification permissions for this site
@@ -101,7 +109,13 @@ export function HomePage() {
             </Button>
           </CardFooter>
         )}
-      </Card>
+        </DynamicShadowCard>
+        </div>
+        {Array.from({ length: 10 }, (_, i) => (
+          <DynamicShadowCard key={`blank-${i}`} className="w-full min-h-[200px]" />
+        ))}
+        </div>
+      </div>
     </div>
   );
 }

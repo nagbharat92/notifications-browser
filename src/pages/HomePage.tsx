@@ -10,8 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { DynamicShadowCard } from "@/components/DynamicShadowCard";
+import { TitleOnlyNotificationCard } from "@/components/TitleOnlyNotificationCard";
+import { TitleDescriptionNotificationCard } from "@/components/TitleDescriptionNotificationCard";
+import { TitleBodyImageNotificationCard } from "@/components/TitleBodyImageNotificationCard";
+import { TitleBodyActionsNotificationCard } from "@/components/TitleBodyActionsNotificationCard";
 
-type SubscriptionState = "unset" | "subscribed" | "unsubscribed" | "denied";
+type SubscriptionState = "unset" | "requested" | "subscribed" | "unsubscribed" | "denied";
 
 function getSubscriptionState(): SubscriptionState {
   if (!("Notification" in window)) return "denied";
@@ -29,6 +33,7 @@ const badgeConfig: Record<SubscriptionState, { variant: "default" | "secondary" 
   unsubscribed: { variant: "secondary", label: "Unsubscribed" },
   denied: { variant: "destructive", label: "Denied" },
   unset: { variant: "secondary", label: "Not Set" },
+  requested: { variant: "secondary", label: "Requested" },
 };
 
 export function HomePage() {
@@ -45,6 +50,7 @@ export function HomePage() {
   }, []);
 
   const handleSubscribe = async () => {
+    setState("requested");
     const result = await Notification.requestPermission();
     if (result === "granted") {
       localStorage.setItem("notification-subscribed", "true");
@@ -68,11 +74,12 @@ export function HomePage() {
       <div className="w-full max-w-[512px] bg-[oklch(0.985_0_0)] border-x border-[oklch(0.92_0_0)] relative">
         <div className="absolute top-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_bottom,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_bottom,_black_0%,_transparent_100%)]" />
         <div className="absolute bottom-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_top,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_top,_black_0%,_transparent_100%)]" />
-        <div className="overflow-y-auto no-scrollbar h-full px-16 py-[200px] flex flex-col gap-16">
+        <div className="overflow-y-auto no-scrollbar h-full px-16 pt-[200px] pb-[400px] flex flex-col gap-32">
         <div className="w-full flex flex-col gap-3">
-          <div className="p-4">
-            <h1 className="text-[48px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)]" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h1>
+          <div className="p-4 animate-fade-in-up animate-delay-0">
+            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)] border-0" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h2>
           </div>
+        <div className="animate-fade-in-up animate-delay-1">
         <DynamicShadowCard className="w-full">
           <CardHeader>
           <CardTitle>Notification Permissions</CardTitle>
@@ -80,14 +87,11 @@ export function HomePage() {
             Manage browser notification permissions for this site
           </CardDescription>
           <CardAction>
-            <Badge variant={variant}>{label}</Badge>
+            <Badge variant={variant} className="transition-all duration-500">{label}</Badge>
           </CardAction>
         </CardHeader>
-        {(state === "subscribed" || state === "unsubscribed" || state === "denied") && (
-          <CardContent>
-            <p className="text-xs text-muted-foreground mb-2">
-              To revoke permissions, paste this URL in your address bar:
-            </p>
+        <div className={`section-collapse ${state !== "unset" ? "is-open" : ""}`}>
+          <div className="px-6 pb-0">
             <button
               onClick={handleCopySettingsUrl}
               className="w-full text-left px-3 py-2 rounded-md bg-muted text-xs font-mono text-foreground hover:bg-muted/80 transition-colors cursor-pointer flex items-center justify-between gap-2"
@@ -97,23 +101,42 @@ export function HomePage() {
                 {copied ? "✓ Copied" : "Copy"}
               </span>
             </button>
-          </CardContent>
-        )}
-        {state === "unset" && (
-          <CardFooter>
+          </div>
+        </div>
+        <div className={`section-collapse ${state === "unset" ? "is-open" : ""}`}>
+          <div className="flex items-center px-6">
             <Button
               className="w-full"
               onClick={handleSubscribe}
             >
               Request Permission
             </Button>
-          </CardFooter>
-        )}
+          </div>
+        </div>
         </DynamicShadowCard>
         </div>
-        {Array.from({ length: 10 }, (_, i) => (
-          <DynamicShadowCard key={`blank-${i}`} className="w-full min-h-[200px]" />
-        ))}
+        </div>
+        {state === "subscribed" && (
+        <div className="w-full flex flex-col gap-3">
+          <div className="p-4 animate-fade-in-up animate-delay-2">
+            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)] border-0" style={{ fontFamily: "'Fraunces', serif" }}>Notifications</h2>
+          </div>
+          <div className="flex flex-col gap-16">
+          <div className="animate-fade-in-up animate-delay-3">
+            <TitleOnlyNotificationCard />
+          </div>
+          <div className="animate-fade-in-up animate-delay-4">
+            <TitleDescriptionNotificationCard />
+          </div>
+          <div className="animate-fade-in-up animate-delay-5">
+            <TitleBodyImageNotificationCard />
+          </div>
+          <div className="animate-fade-in-up animate-delay-6">
+            <TitleBodyActionsNotificationCard />
+          </div>
+          </div>
+        </div>
+        )}
         </div>
       </div>
     </div>

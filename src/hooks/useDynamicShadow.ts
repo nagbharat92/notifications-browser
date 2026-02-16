@@ -9,10 +9,30 @@ const OPACITY_MIN = 0.15;
 const OPACITY_MAX = 0.65;
 const MAX_DIST = 600;
 
+// ── Tilt constants ──
+const MAX_TILT = 10; // degrees
+const TILT_MAX_DIST = 600; // px
+
+export interface DynamicCardStyle {
+  shadow: string;
+  tiltX: number; // rotateX degrees
+  tiltY: number; // rotateY degrees
+  lightAngle: number; // CSS gradient angle (deg) pointing toward pointer
+}
+
+const DEFAULT_STYLE: DynamicCardStyle = {
+  shadow: `0px 12px ${BLUR_MAX}px ${SPREAD}px ${SHADOW_BASE} / ${OPACITY_MIN})`,
+  tiltX: 0,
+  tiltY: 0,
+  lightAngle: 180,
+};
+
 /**
- * Returns a box-shadow string that reacts to the mouse position,
- * treating the cursor as a light source. The shadow falls opposite
- * to the cursor relative to the element's center.
+ * Returns a box-shadow string and 3-D tilt angles that react to the
+ * mouse position, treating the cursor as a light source.
+ *
+ * Shadow: falls opposite to the cursor (light-source metaphor).
+ * Tilt:   card leans *toward* the cursor (perspective-tilt effect).
  *
  * As the cursor gets closer:
  *  - shadow offset shrinks (light is nearly overhead)
@@ -26,10 +46,8 @@ const MAX_DIST = 600;
  */
 export function useDynamicShadow(
   ref: RefObject<HTMLElement | null>
-): string {
-  const [shadow, setShadow] = useState(
-    `0px 12px ${BLUR_MAX}px ${SPREAD}px ${SHADOW_BASE} / ${OPACITY_MIN})`
-  );
+): DynamicCardStyle {
+  const [cardStyle, setCardStyle] = useState<DynamicCardStyle>(DEFAULT_STYLE);
   const rafId = useRef(0);
 
   useEffect(() => {
@@ -48,13 +66,21 @@ export function useDynamicShadow(
         const dy = cy - e.clientY;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
+        // ── Light angle (CSS degrees, pointing toward cursor) ──
+        const mathAngle = Math.atan2(-(e.clientY - cy), e.clientX - cx);
+        const lightAngle = (90 - (mathAngle * 180) / Math.PI + 360) % 360;
+
         if (dist === 0) {
-          setShadow(
-            `0px 0px ${BLUR_MIN}px ${SPREAD}px ${SHADOW_BASE} / ${OPACITY_MAX})`
-          );
+          setCardStyle({
+            shadow: `0px 0px ${BLUR_MIN}px ${SPREAD}px ${SHADOW_BASE} / ${OPACITY_MAX})`,
+            tiltX: 0,
+            tiltY: 0,
+            lightAngle,
+          });
           return;
         }
 
+        // ── Shadow ──
         // t = 0 when cursor is on the card, 1 when far away
         const t = Math.min(dist / MAX_DIST, 1);
 
@@ -69,18 +95,32 @@ export function useDynamicShadow(
         // Closer → smaller blur (sharp), farther → larger blur (soft)
         const blur = BLUR_MIN + t * (BLUR_MAX - BLUR_MIN);
 
-        setShadow(
-          `${ox.toFixed(1)}px ${oy.toFixed(1)}px ${blur.toFixed(0)}px ${SPREAD}px ${SHADOW_BASE} / ${opacity.toFixed(3)})`
-        );
+        const shadow = `${ox.toFixed(1)}px ${oy.toFixed(1)}px ${blur.toFixed(0)}px ${SPREAD}px ${SHADOW_BASE} / ${opacity.toFixed(3)})`;
+
+        // ── Tilt (card leans toward cursor) ──
+        const tiltT = Math.min(dist / TILT_MAX_DIST, 1);
+        // rotateY: positive when mouse is to the right of center
+        const tiltY = -(dx / dist) * tiltT * MAX_TILT;
+        // rotateX: positive when mouse is above center (card tips forward)
+        const tiltX = (dy / dist) * tiltT * MAX_TILT;
+
+        setCardStyle({ shadow, tiltX, tiltY, lightAngle });
       });
     };
 
+    const onMouseLeave = () => {
+      cancelAnimationFrame(rafId.current);
+      setCardStyle(DEFAULT_STYLE);
+    };
+
     window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseleave", onMouseLeave);
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseleave", onMouseLeave);
       cancelAnimationFrame(rafId.current);
     };
   }, [ref]);
 
-  return shadow;
+  return cardStyle;
 }

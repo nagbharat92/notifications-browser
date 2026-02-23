@@ -1,19 +1,30 @@
 import { Button } from "@/components/ui/button";
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme, type Theme } from "@/context/ThemeContext";
+
+const CYCLE: Theme[] = ["system", "light", "dark"];
 
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
 
   const toggle = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    const idx = CYCLE.indexOf(theme);
+    setTheme(CYCLE[(idx + 1) % CYCLE.length]);
   };
+
+  const label =
+    theme === "system"
+      ? `System (${resolvedTheme})`
+      : resolvedTheme === "dark"
+        ? "Dark"
+        : "Light";
 
   return (
     <Button
       variant="ghost"
       size="icon"
       onClick={toggle}
-      aria-label={`Theme: ${resolvedTheme === "dark" ? "Dark" : "Light"}`}
+      aria-label={`Theme: ${label}`}
+      title={`Theme: ${label}`}
       className="cursor-pointer"
     >
       <div

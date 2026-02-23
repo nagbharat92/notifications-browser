@@ -13,6 +13,25 @@
     <title>Notification Types</title>
   </head>
   <body>
+    <script>
+      // Apply theme immediately to prevent flash of wrong theme
+      (function () {
+        var stored = null;
+        try { stored = localStorage.getItem('theme'); } catch (e) {}
+        var isDark;
+        if (stored === 'dark') {
+          isDark = true;
+        } else if (stored === 'light') {
+          isDark = false;
+        } else {
+          // "system" or no value — follow browser preference
+          isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          // Clear any stale explicit value so React defaults to "system"
+          try { localStorage.removeItem('theme'); } catch (e) {}
+        }
+        if (isDark) document.documentElement.classList.add('dark');
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

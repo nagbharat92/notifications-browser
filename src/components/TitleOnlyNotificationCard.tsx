@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 import { Button } from "@/components/ui/button";
 import {
   CardContent,
@@ -10,6 +11,7 @@ import { DynamicShadowCard } from "@/components/DynamicShadowCard";
 
 export function TitleOnlyNotificationCard() {
   const [sent, setSent] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   const handleSendNotification = () => {
     if (Notification.permission !== "granted") return;
@@ -30,11 +32,15 @@ export function TitleOnlyNotificationCard() {
         <CardTitle>Title Only</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="w-full h-[100px] rounded-lg bg-muted" />
+        <img
+          src={`${import.meta.env.BASE_URL}creatives/title-only-${resolvedTheme === "dark" ? "dark" : "light"}.png`}
+          alt="Title only notification preview"
+          className="w-full rounded-lg object-cover"
+        />
       </CardContent>
       <CardFooter>
         <Button
-          variant="secondary"
+          variant="default"
           className="w-full"
           disabled={!isGranted}
           onClick={handleSendNotification}

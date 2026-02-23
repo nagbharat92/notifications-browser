@@ -89,6 +89,13 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ── App-specific semantic tokens ── */
+  --color-surface: var(--surface);
+  --color-surface-border: var(--surface-border);
+  --color-grid-dot: var(--grid-dot);
+  --color-heading-accent: var(--heading-accent);
+  --color-card-surface: var(--card-surface);
 }
 
 :root {
@@ -124,6 +131,17 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ── App-specific semantic tokens ── */
+  --surface: oklch(0.985 0 0);
+  --surface-border: oklch(0.922 0 0);
+  --grid-dot: oklch(0.88 0 0);
+  --heading-accent: oklch(0.488 0.243 264.376);
+  --card-surface: oklch(1 0 0);
+  --card-shadow-oklch: 0.282 0.091 267.935;
+  --surface-border-oklch: 0.922 0 0;
+  --card-shine-rgb: 255 255 255;
+  --card-border-highlight-rgb: 255 255 255;
 }
 
 .dark {
@@ -158,6 +176,17 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* ── App-specific semantic tokens ── */
+  --surface: oklch(0.16 0 0);
+  --surface-border: oklch(1 0 0 / 10%);
+  --grid-dot: oklch(0.22 0 0);
+  --heading-accent: oklch(0.72 0.14 264.376);
+  --card-surface: oklch(0.205 0 0);
+  --card-shadow-oklch: 0 0 0;
+  --surface-border-oklch: 0.35 0 0;
+  --card-shine-rgb: 255 255 255;
+  --card-border-highlight-rgb: 180 180 220;
 }
 
 @layer base {
@@ -197,6 +226,32 @@
   code {
     @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
   }
+}
+
+/* Inner card elements: tiered 3-D lift + soft shadow on hover */
+.dynamic-shadow-card [data-slot="card"] > * {
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tier 1 – Decorations (image placeholders): barely lift */
+.dynamic-shadow-card:hover [data-slot="card-content"] {
+  transform: translateY(-1px);
+  filter: drop-shadow(0 1px 2px oklch(var(--card-shadow-oklch) / 0.08));
+}
+
+/* Tier 2 – Text (title, description): moderate lift */
+.dynamic-shadow-card:hover [data-slot="card-header"] {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 2px 3px oklch(var(--card-shadow-oklch) / 0.12));
+}
+
+/* Tier 3 – Buttons & interactive controls: most elevated */
+.dynamic-shadow-card:hover [data-slot="card-footer"],
+.dynamic-shadow-card:hover .section-collapse {
+  transform: translateY(-3px);
+  filter: drop-shadow(0 4px 5px oklch(var(--card-shadow-oklch) / 0.16));
 }
 
 .no-scrollbar {

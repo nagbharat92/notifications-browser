@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   CardAction,
   CardDescription,
@@ -68,14 +69,18 @@ export function HomePage() {
   const { variant, label } = badgeConfig[state];
 
   return (
-    <div className="h-svh flex items-stretch justify-center overflow-hidden bg-[radial-gradient(circle,_oklch(0.88_0_0)_1px,_transparent_1px)] bg-[length:16px_16px]">
-      <div className="w-full max-w-[512px] bg-[oklch(0.985_0_0)] border-x border-[oklch(0.92_0_0)] relative">
-        <div className="absolute top-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_bottom,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_bottom,_black_0%,_transparent_100%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_top,_oklch(0.985_0_0)_0%,_oklch(0.985_0_0_/_0%)_100%)] [mask-image:linear-gradient(to_top,_black_0%,_transparent_100%)]" />
-        <div className="overflow-y-auto no-scrollbar h-full px-16 pt-[200px] pb-[400px] flex flex-col gap-32">
+    <div className="h-svh flex items-stretch justify-center overflow-hidden bg-[radial-gradient(circle,_var(--grid-dot)_1px,_transparent_1px)] bg-[length:16px_16px]">
+      <div className="w-full max-w-[512px] bg-surface border-x border-surface-border relative">
+        {/* Theme toggle — top-right, above blur overlays */}
+        <div className="absolute top-3 right-3 z-20">
+          <ThemeToggle />
+        </div>
+        <div className="absolute top-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_bottom,_var(--surface)_0%,_transparent_100%)] [mask-image:linear-gradient(to_bottom,_black_0%,_transparent_100%)]" />
+        <div className="absolute bottom-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_top,_var(--surface)_0%,_transparent_100%)] [mask-image:linear-gradient(to_top,_black_0%,_transparent_100%)]" />
+        <div className="overflow-y-auto no-scrollbar h-full px-16 pt-[100px] pb-[400px] flex flex-col gap-[100px]">
         <div className="w-full flex flex-col gap-3">
           <div className="p-4 animate-fade-in-up animate-delay-0">
-            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)] border-0" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h2>
+            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-heading-accent border-0" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h2>
           </div>
         <div className="animate-fade-in-up animate-delay-1">
         <DynamicShadowCard className="w-full">
@@ -117,7 +122,7 @@ export function HomePage() {
         {state === "subscribed" && (
         <div className="w-full flex flex-col gap-3">
           <div className="p-4 animate-fade-in-up animate-delay-2">
-            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-[oklch(48.8%_0.243_264.376)] border-0" style={{ fontFamily: "'Fraunces', serif" }}>Notifications</h2>
+            <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-heading-accent border-0" style={{ fontFamily: "'Fraunces', serif" }}>Notifications</h2>
           </div>
           <div className="flex flex-col gap-16">
           <div className="animate-fade-in-up animate-delay-3">

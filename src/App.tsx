@@ -1,11 +1,14 @@
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { ThemeProvider } from '@/context/ThemeContext'
 import { HomePage } from '@/pages'
 
 function App() {
   return (
-    <TooltipProvider>
-      <HomePage />
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <HomePage />
+      </TooltipProvider>
+    </ThemeProvider>
   )
 }
 

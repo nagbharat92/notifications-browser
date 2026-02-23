@@ -17,6 +17,15 @@
   animation: fade-in-up 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .animate-delay-0 { animation-delay: 0ms; }
 .animate-delay-1 { animation-delay: 200ms; }
 .animate-delay-2 { animation-delay: 420ms; }

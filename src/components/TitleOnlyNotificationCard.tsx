@@ -40,7 +40,7 @@ export function TitleOnlyNotificationCard() {
 
   return (
     <DynamicShadowCard className="w-full">
-      <CardHeader className="grid-rows-[auto] gap-0">
+      <CardHeader className="grid-rows-[auto] gap-0 text-center">
         <CardTitle>Title Only</CardTitle>
       </CardHeader>
       <CardContent>

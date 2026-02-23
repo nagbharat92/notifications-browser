@@ -71,7 +71,7 @@ export function HomePage() {
 
   return (
     <div className="h-svh flex items-stretch justify-center overflow-hidden bg-[radial-gradient(circle,_var(--grid-dot)_1px,_transparent_1px)] bg-[length:16px_16px]">
-      <div className="w-full max-w-[512px] bg-surface border-x border-surface-border relative">
+      <div className="w-full max-w-[512px] bg-surface border-x border-surface-border relative animate-fade-in animate-delay-0">
         {/* Theme toggle — top-right, above blur overlays */}
         <div className="absolute top-3 right-3 z-20">
           <ThemeToggle />

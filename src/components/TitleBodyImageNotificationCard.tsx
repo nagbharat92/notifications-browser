@@ -9,6 +9,18 @@ import {
 } from "@/components/ui/card";
 import { DynamicShadowCard } from "@/components/DynamicShadowCard";
 
+const titles = [
+  "Hello!",
+  "Hi there!",
+  "Hey!",
+  "What's up!",
+  "Howdy!",
+];
+
+function randomTitle() {
+  return titles[Math.floor(Math.random() * titles.length)];
+}
+
 export function TitleBodyImageNotificationCard() {
   const [sent, setSent] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -16,8 +28,8 @@ export function TitleBodyImageNotificationCard() {
   const handleSendNotification = () => {
     if (Notification.permission !== "granted") return;
 
-    new Notification("Hello from Notifications Browser", {
-      body: "This is a notification with a title, body, and icon.",
+    new Notification(randomTitle(), {
+      body: "You have a new notification.",
       icon: "https://placehold.co/128x128/e2e8f0/64748b?text=Icon",
     });
 

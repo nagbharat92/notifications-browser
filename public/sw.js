@@ -12,9 +12,9 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const action = event.action;
-  if (action === "reply") {
+  if (action === "allow") {
     clients.openWindow("/");
-  } else if (action === "dismiss") {
+  } else if (action === "deny") {
     // Just close the notification
   } else {
     // Default click — open the app

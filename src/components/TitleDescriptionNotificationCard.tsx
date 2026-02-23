@@ -9,6 +9,18 @@ import {
 } from "@/components/ui/card";
 import { DynamicShadowCard } from "@/components/DynamicShadowCard";
 
+const titles = [
+  "Hello!",
+  "Hi there!",
+  "Hey!",
+  "What's up!",
+  "Howdy!",
+];
+
+function randomTitle() {
+  return titles[Math.floor(Math.random() * titles.length)];
+}
+
 export function TitleDescriptionNotificationCard() {
   const [sent, setSent] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -16,8 +28,8 @@ export function TitleDescriptionNotificationCard() {
   const handleSendNotification = () => {
     if (Notification.permission !== "granted") return;
 
-    new Notification("Hello from Notifications Browser", {
-      body: "This is a notification with a title and a description body.",
+    new Notification(randomTitle(), {
+      body: "You have a new notification.",
     });
 
     setSent(true);

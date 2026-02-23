@@ -13,6 +13,7 @@ import { TitleOnlyNotificationCard } from "@/components/TitleOnlyNotificationCar
 import { TitleDescriptionNotificationCard } from "@/components/TitleDescriptionNotificationCard";
 import { TitleBodyImageNotificationCard } from "@/components/TitleBodyImageNotificationCard";
 import { TitleBodyActionsNotificationCard } from "@/components/TitleBodyActionsNotificationCard";
+import { Separator } from "@/components/ui/separator";
 
 type SubscriptionState = "unset" | "requested" | "subscribed" | "unsubscribed" | "denied";
 
@@ -140,6 +141,15 @@ export function HomePage() {
           </div>
         </div>
         )}
+        <div className={`w-full flex flex-col gap-8 px-6 pb-6 animate-fade-in-up ${state === "subscribed" ? "animate-delay-7" : "animate-delay-2"}`}>
+          <p className="text-sm text-muted-foreground leading-relaxed text-balance">
+            This started as a product conversation about improving how we notify people. Before jumping to solutions, I wanted to understand what the browser actually gives us to work with, specifically on macOS and Chromium. So I built this: a small playground to trigger and feel each notification type firsthand. Sometimes the best research is just making the thing.
+          </p>
+          <Separator />
+          <span className="text-xs text-muted-foreground leading-none">
+            <a href="https://x.com/bharatnag92" target="_blank" rel="noopener noreferrer" className="hover:underline">@bharatnag92</a>
+          </span>
+        </div>
         </div>
       </div>
     </div>

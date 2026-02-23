@@ -9,6 +9,18 @@ import {
 } from "@/components/ui/card";
 import { DynamicShadowCard } from "@/components/DynamicShadowCard";
 
+const titles = [
+  "Hello!",
+  "Hi there!",
+  "Hey!",
+  "What's up!",
+  "Howdy!",
+];
+
+function randomTitle() {
+  return titles[Math.floor(Math.random() * titles.length)];
+}
+
 export function TitleOnlyNotificationCard() {
   const [sent, setSent] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -18,7 +30,7 @@ export function TitleOnlyNotificationCard() {
 
     // Title-only notification: no body, no options — macOS renders
     // just the title line alongside the browser icon per Apple HIG.
-    new Notification("Hello from Notifications Browser");
+    new Notification(randomTitle());
 
     setSent(true);
     setTimeout(() => setSent(false), 2000);

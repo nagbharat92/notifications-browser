@@ -240,28 +240,23 @@
 
 /* Inner card elements: tiered 3-D lift + soft shadow on hover */
 .dynamic-shadow-card [data-slot="card"] > * {
-  transition:
-    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Tier 1 – Decorations (image placeholders): barely lift */
 .dynamic-shadow-card:hover [data-slot="card-content"] {
   transform: translateY(-1px);
-  filter: drop-shadow(0 1px 2px oklch(var(--card-shadow-oklch) / 0.08));
 }
 
 /* Tier 2 – Text (title, description): moderate lift */
 .dynamic-shadow-card:hover [data-slot="card-header"] {
   transform: translateY(-2px);
-  filter: drop-shadow(0 2px 3px oklch(var(--card-shadow-oklch) / 0.12));
 }
 
 /* Tier 3 – Buttons & interactive controls: most elevated */
 .dynamic-shadow-card:hover [data-slot="card-footer"],
 .dynamic-shadow-card:hover .section-collapse {
   transform: translateY(-3px);
-  filter: drop-shadow(0 4px 5px oklch(var(--card-shadow-oklch) / 0.16));
 }
 
 .no-scrollbar {

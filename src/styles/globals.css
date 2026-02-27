@@ -266,3 +266,36 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Smooth theme crossfade via View Transitions API ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+::view-transition-old(root) {
+  animation: theme-fade-out 0.8s ease-in-out;
+}
+
+::view-transition-new(root) {
+  animation: theme-fade-in 0.8s ease-in-out;
+}
+
+@keyframes theme-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes theme-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

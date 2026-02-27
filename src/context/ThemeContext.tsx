@@ -49,11 +49,20 @@ function resolveTheme(theme: Theme): ResolvedTheme {
 }
 
 function applyThemeToDOM(resolved: ResolvedTheme) {
-  const root = document.documentElement;
-  if (resolved === "dark") {
-    root.classList.add(DARK_CLASS);
+  const updateDOM = () => {
+    const root = document.documentElement;
+    if (resolved === "dark") {
+      root.classList.add(DARK_CLASS);
+    } else {
+      root.classList.remove(DARK_CLASS);
+    }
+  };
+
+  // Use View Transitions API for a smooth crossfade when available
+  if (document.startViewTransition) {
+    document.startViewTransition(updateDOM);
   } else {
-    root.classList.remove(DARK_CLASS);
+    updateDOM();
   }
 }
 

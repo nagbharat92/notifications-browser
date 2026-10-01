@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+# Ping Lab
+
+https://nagbharat92.github.io/notifications-browser/
+
+A hands-on playground for browser notifications.
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

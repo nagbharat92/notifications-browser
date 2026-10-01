@@ -79,6 +79,10 @@ export function HomePage() {
         <div className="absolute top-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_bottom,_var(--surface)_0%,_transparent_100%)] [mask-image:linear-gradient(to_bottom,_black_0%,_transparent_100%)]" />
         <div className="absolute bottom-0 left-0 right-0 h-[100px] z-10 pointer-events-none backdrop-blur-xl bg-[linear-gradient(to_top,_var(--surface)_0%,_transparent_100%)] [mask-image:linear-gradient(to_top,_black_0%,_transparent_100%)]" />
         <div className="overflow-y-auto no-scrollbar h-full px-16 pt-[100px] pb-[400px] flex flex-col gap-[100px]">
+        <header className="text-center animate-fade-in animate-delay-0">
+         <h1 className="text-[36px] leading-none font-black tracking-tight text-heading-accent" style={{ fontFamily: "'Fraunces', serif" }}>Ping Lab</h1>
+         <p className="mt-3 text-sm text-muted-foreground">A hands-on playground for browser notifications.</p>
+        </header>
         <div className="w-full flex flex-col gap-3">
           <div className="p-4 animate-fade-in-up animate-delay-0">
             <h2 className="text-[36px] leading-none font-black tracking-tight w-full text-center text-heading-accent border-0" style={{ fontFamily: "'Fraunces', serif" }}>Permissions</h2>

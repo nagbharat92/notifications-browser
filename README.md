@@ -1,58 +1,41 @@
 # Ping Lab
 
-https://nagbharat92.github.io/notifications-browser/
+https://nagbharat92.github.io/ping-lab/
 
 A hands-on playground for browser notifications.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Explore what the browser actually gives you before designing a notification experience. Ping Lab was built to try native notifications firsthand, with a focus on macOS and Chromium.
 
-Currently, two official plugins are available:
+## What you can try
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Request notification permission and see its current status.
+- Send four notification types: title only, title with body text, title with body and icon, and title with body and action buttons.
+- Explore light, dark and system themes, cursor-tracking 3-D cards and staggered animations.
 
-## Expanding the ESLint configuration
+Notifications require your permission. Action buttons use a service worker and depend on browser and operating-system support; Chromium-based browsers are the intended testing target.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Run locally
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local URL printed by Vite, using the `/ping-lab/` path.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm run build
+npm run preview
 ```
+
+## Built with
+
+React 19, TypeScript, Vite, Tailwind CSS v4, shadcn/ui and the Web Notifications API.
+
+## Deployment
+
+GitHub Actions builds and deploys the site to GitHub Pages on pushes to `main`. Vite's base path is `/ping-lab/`; preview images and service-worker registration use that base, and notification clicks open the app at the service worker's scope.
+
+Repository: https://github.com/nagbharat92/ping-lab
+
+See [PROJECT.md](PROJECT.md) for the project structure and implementation details.

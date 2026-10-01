@@ -1,6 +1,10 @@
-# Notifications Browser
+# Ping Lab
 
 An interactive single-page web app for exploring the **Browser Notifications API**. It lets users request notification permissions and send different types of native browser notifications — all wrapped in a polished, theme-aware UI with 3-D card hover effects.
+
+Live site: https://nagbharat92.github.io/ping-lab/
+
+Repository: https://github.com/nagbharat92/ping-lab
 
 ## Purpose
 
@@ -60,12 +64,12 @@ Once permission is granted, the app reveals four notification cards, each demons
 | **Title Only** | `new Notification(title)` | Minimal notification with just a title |
 | **Title + Description** | `new Notification(title, { body })` | Adds a body/description |
 | **Title + Body + Icon** | `new Notification(title, { body, icon })` | Adds a custom icon image |
-| **Title + Body + Actions** | `ServiceWorkerRegistration.showNotification()` | Adds interactive action buttons (Reply/Dismiss) via the service worker |
+| **Title + Body + Actions** | `ServiceWorkerRegistration.showNotification()` | Adds interactive action buttons (Allow/Deny) via the service worker |
 
 ### Service Worker
 
 A minimal service worker (`public/sw.js`) is registered at startup. It handles:
-- `notificationclick` events — routes action button clicks (`reply` opens the app, `dismiss` closes the notification).
+- `notificationclick` events — routes action button clicks (`allow` opens the app at the service worker's scope, `deny` closes the notification).
 - Immediate activation via `skipWaiting()` and `clients.claim()`.
 
 ### 3-D Card Effect (`DynamicShadowCard`)

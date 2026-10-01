@@ -11,13 +11,7 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
-  const action = event.action;
-  if (action === "allow") {
-    clients.openWindow("/");
-  } else if (action === "deny") {
-    // Just close the notification
-  } else {
-    // Default click — open the app
-    clients.openWindow("/");
+  if (event.action !== "deny") {
+    event.waitUntil(clients.openWindow(self.registration.scope));
   }
 });
